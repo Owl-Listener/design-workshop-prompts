@@ -58,4 +58,4 @@ MIT — use these however you want, wherever you want.
 
 ---
 
-Made by [MC Percolates](https://marieclairedean.substack.com). Design is the missing discipline in AI.
+Made by [MC Percolates](https://marieclairedean.substack.com). 
