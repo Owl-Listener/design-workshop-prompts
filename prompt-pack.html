@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Pack for Design Workshops — MC Percolates</title>
+<style>
+  :root {
+    --bg: #FAF9F7;
+    --surface: #FFFFFF;
+    --surface-hover: #F5F3F0;
+    --text: #1A1A1A;
+    --text-secondary: #5C5C5C;
+    --text-tertiary: #8A8A8A;
+    --accent: #C05A2C;
+    --accent-light: #F3E8E2;
+    --accent-hover: #A84D25;
+    --border: #E8E5E1;
+    --border-light: #F0EEEB;
+    --tag-facilitator: #2C6B5A;
+    --tag-facilitator-bg: #E2F0EC;
+    --tag-participant: #5A4B8A;
+    --tag-participant-bg: #EDEAF5;
+    --tag-both: #6B5A2C;
+    --tag-both-bg: #F5F0E2;
+    --copied: #2C6B5A;
+    --copied-bg: #E2F0EC;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+    --radius: 10px;
+    --radius-sm: 6px;
+    --radius-lg: 14px;
+    --font: 'Georgia', 'Times New Roman', serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    text-align: center;
+    padding: 64px 24px 48px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .header-tag {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+  .header h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    line-height: 1.15;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  .header p {
+    font-size: 17px;
+    color: var(--text-secondary);
+    max-width: 560px;
+    margin: 0 auto 8px;
+    line-height: 1.65;
+  }
+  .header .byline {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: 24px;
+  }
+  .header .byline a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .header .byline a:hover { text-decoration: underline; }
+
+  /* ---- FILTER BAR ---- */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: 800px;
+    margin: 0 auto 48px;
+    padding: 0 24px;
+  }
+  .filter-btn {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    white-space: nowrap;
+  }
+  .filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+  .filter-btn.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+
+  /* ---- ROLE TOGGLE ---- */
+  .role-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 auto 40px;
+    padding: 0 24px;
+  }
+  .role-btn {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+  .role-btn:hover { color: var(--text-secondary); }
+  .role-btn.active {
+    background: var(--text);
+    color: white;
+    border-color: var(--text);
+  }
+
+  /* ---- CATEGORY SECTIONS ---- */
+  .content { max-width: 800px; margin: 0 auto; padding: 0 24px 96px; }
+
+  .category {
+    margin-bottom: 56px;
+    animation: fadeIn 0.3s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .category-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .category-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .category-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    margin-left: 48px;
+    line-height: 1.55;
+  }
+
+  /* ---- PROMPT CARDS ---- */
+  .prompt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    transition: box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+    position: relative;
+  }
+  .prompt-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: #DDD9D4;
+  }
+  .prompt-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .prompt-title {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .prompt-tags {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .tag {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .tag-facilitator { color: var(--tag-facilitator); background: var(--tag-facilitator-bg); }
+  .tag-participant { color: var(--tag-participant); background: var(--tag-participant-bg); }
+  .tag-both { color: var(--tag-both); background: var(--tag-both-bg); }
+
+  .prompt-text {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    white-space: pre-wrap;
+    font-family: var(--font-sans);
+    position: relative;
+  }
+  .prompt-note {
+    font-family: var(--font-sans);
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    margin-top: 12px;
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ---- COPY BUTTON ---- */
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: all 0.15s ease-out;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 2;
+  }
+  .copy-btn:hover {
+    background: var(--text);
+    color: white;
+    border-color: var(--text);
+  }
+  .copy-btn.copied {
+    background: var(--copied-bg);
+    color: var(--copied);
+    border-color: var(--copied);
+  }
+  .copy-btn svg { width: 14px; height: 14px; }
+
+  /* ---- USAGE TIPS ---- */
+  .tips {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+  .tips-box {
+    background: var(--accent-light);
+    border: 1px solid #E8D5CC;
+    border-radius: var(--radius-lg);
+    padding: 32px;
+  }
+  .tips-box h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--accent);
+  }
+  .tips-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .tips-box li {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+  }
+  .tips-box li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    text-align: center;
+    padding: 48px 24px 64px;
+    border-top: 1px solid var(--border);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .footer p {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-tertiary);
+    line-height: 1.6;
+  }
+  .footer a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .footer a:hover { text-decoration: underline; }
+
+  /* ---- COUNTER ---- */
+  .prompt-count {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-tertiary);
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 640px) {
+    .header { padding: 48px 20px 40px; }
+    .content { padding: 0 16px 64px; }
+    .prompt-card { padding: 20px; }
+    .prompt-text { padding: 14px; font-size: 13.5px; }
+    .category-desc { margin-left: 0; }
+    .filter-bar { gap: 6px; }
+    .filter-btn { font-size: 12px; padding: 6px 12px; }
+  }
+
+  /* ---- HIDDEN ---- */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-tag">Catalyst Resource</div>
+  <h1>Prompt Pack for Design Workshops</h1>
+  <p>36 ready-to-paste prompts for running better design workshops with any LLM. Organized by activity, labeled by role. Copy, paste, go.</p>
+  <div class="byline">From <a href="https://marieclairedean.substack.com" target="_blank">MC Percolates</a></div>
+</div>
+
+<!-- FILTERS -->
+<div class="filter-bar" id="filterBar">
+  <button class="filter-btn active" data-filter="all">All prompts</button>
+  <button class="filter-btn" data-filter="stakeholder">Stakeholder Interviews</button>
+  <button class="filter-btn" data-filter="sprint">Design Sprints</button>
+  <button class="filter-btn" data-filter="critique">Critique Sessions</button>
+  <button class="filter-btn" data-filter="research">Research Synthesis</button>
+  <button class="filter-btn" data-filter="prioritization">Prioritization</button>
+  <button class="filter-btn" data-filter="roadmap">Roadmap Planning</button>
+</div>
+
+<!-- ROLE TOGGLE -->
+<div class="role-toggle" id="roleToggle">
+  <button class="role-btn active" data-role="all">All roles</button>
+  <button class="role-btn" data-role="facilitator">Facilitator</button>
+  <button class="role-btn" data-role="participant">Participant</button>
+</div>
+
+<div class="prompt-count" id="promptCount">Showing 36 prompts</div>
+
+<!-- MAIN CONTENT -->
+<div class="content" id="content">
+
+  <!-- ==================== STAKEHOLDER INTERVIEWS ==================== -->
+  <div class="category" data-category="stakeholder">
+    <div class="category-header">
+      <div class="category-icon" style="background: #E8F0FE; color: #3B7DD8;">&#x1F399;</div>
+      <h2>Stakeholder Interviews</h2>
+    </div>
+    <p class="category-desc">Prepare smarter questions, synthesize what you heard, and surface the real priorities hiding underneath the stated ones.</p>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Generate a tailored interview script</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">I'm interviewing [role/name] about [project or initiative]. They care most about [known priorities]. I have 30 minutes.
+
+Generate an interview script with:
+- 2 warm-up questions to build rapport
+- 5 core questions that surface their real concerns (not just stated priorities)
+- 2 questions that test assumptions we've been making
+- 1 closing question that opens the door to things I haven't thought to ask
+
+For each question, include a brief note on what I'm actually listening for in their answer.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="prompt-note">Tip: Replace the bracketed sections with your specifics. The more context you give, the sharper the questions.</div>
+    </div>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Debrief and extract themes from a session</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">Here are my raw notes from a stakeholder interview:
+
+[Paste your notes]
+
+Analyze this and give me:
+1. The 3 strongest themes across their answers
+2. Any contradictions between what they said they want and what they actually seem to need
+3. Assumptions they're making that we should test
+4. A one-paragraph summary I could share with my team
+5. Two follow-up questions I should ask next time<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="participant">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Prepare your own talking points</div>
+        <div class="prompt-tags"><span class="tag tag-participant">Participant</span></div>
+      </div>
+      <div class="prompt-text">I'm a [your role] about to be interviewed by the design team about [project]. I want to communicate clearly and make sure my perspective is actually useful.
+
+Help me prepare:
+- 3 things I should definitely mention (based on what design teams typically need to hear from someone in my role)
+- 2 things I should be honest about even if they're uncomfortable
+- A way to frame my constraints without sounding like I'm blocking progress<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Compare perspectives across multiple interviews</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">I've interviewed these stakeholders about [project]:
+
+[Paste summaries or key quotes from each person]
+
+Compare their perspectives and show me:
+1. Where they genuinely agree (shared ground I can build on)
+2. Where they think they agree but actually mean different things
+3. Where they openly disagree and what's driving the disagreement
+4. The single biggest risk if I design without resolving these tensions<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="both">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Turn interview insights into design principles</div>
+        <div class="prompt-tags"><span class="tag tag-both">Both</span></div>
+      </div>
+      <div class="prompt-text">Based on these stakeholder interview themes:
+
+[Paste your themes or summary]
+
+Draft 4-6 design principles that:
+- Are specific enough to actually guide decisions (not generic "be user-friendly")
+- Each one resolves a real tension that came up in the interviews
+- Include a "this, not that" example for each one
+- Could be printed on a wall and used during design reviews<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+  </div>
+
+  <!-- ==================== DESIGN SPRINTS ==================== -->
+  <div class="category" data-category="sprint">
+    <div class="category-header">
+      <div class="category-icon" style="background: #FEF3E2; color: #D4820A;">&#x26A1;</div>
+      <h2>Design Sprints</h2>
+    </div>
+    <p class="category-desc">Prompts for every phase of a sprint, from challenge framing on Monday to prototype testing on Friday. Keep momentum when the room stalls.</p>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Frame the sprint challenge</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">We're running a design sprint on [topic/problem]. Here's what we know:
+
+- Business context: [brief description]
+- Users affected: [who]
+- Current pain points: [what's broken or missing]
+- Constraints: [time, tech, budget, politics]
+
+Help me write a sprint challenge question in the format: "How might we [outcome] for [user] so that [impact]?"
+
+Give me 3 versions: one ambitious, one pragmatic, one that reframes the problem entirely. For each, explain what it would focus the team on and what it would leave out.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="participant">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Generate "How Might We" notes</div>
+        <div class="prompt-tags"><span class="tag tag-participant">Participant</span></div>
+      </div>
+      <div class="prompt-text">Our sprint challenge is: "[paste the HMW question]"
+
+I need to generate How Might We notes during our sprint. Help me think divergently by generating 15 HMW questions across these angles:
+- Reframe the problem (what if the opposite were true?)
+- Amplify what's already working
+- Remove a constraint entirely
+- Serve an extreme user
+- Break the problem into smaller parts
+
+Make each one specific enough to spark a real idea, not so broad it could mean anything.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="participant">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Sketch session: generate solution concepts</div>
+        <div class="prompt-tags"><span class="tag tag-participant">Participant</span></div>
+      </div>
+      <div class="prompt-text">I'm in a design sprint sketch session. Our challenge is: "[HMW question]"
+
+Help me brainstorm 6 distinct solution directions. For each one, give me:
+- A descriptive name (2-3 words)
+- The core idea in one sentence
+- What makes this approach different from the others
+- The biggest assumption it relies on
+
+I'm looking for range, not refinement. Push me past the obvious solutions.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Write a test script for prototype Friday</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">We've built a prototype for [brief description]. We're testing with [number] users on Friday.
+
+Our top 3 questions to answer:
+1. [question]
+2. [question]
+3. [question]
+
+Write a 30-minute usability test script with:
+- An intro that puts participants at ease and sets expectations
+- 4-5 task scenarios that test our questions (phrased as realistic goals, not instructions)
+- Probing follow-up questions for each task
+- A debrief section to capture reactions
+- A note-taking template I can hand to observers<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Unstick a stalled sprint room</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">My sprint team is stuck. We're on [day/phase] and the energy has dropped because [describe what happened: can't agree, too many ideas, solution feels obvious/boring, scope creep, etc.].
+
+The room has [number] people: [roles].
+
+Give me:
+1. A diagnosis of what's likely going wrong (based on common sprint dynamics)
+2. A 10-minute exercise I can run right now to shift the energy
+3. A reframe of the problem that might unlock new thinking
+4. The one question I should ask the room to get things moving again<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="both">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Sprint retrospective synthesis</div>
+        <div class="prompt-tags"><span class="tag tag-both">Both</span></div>
+      </div>
+      <div class="prompt-text">We just finished a design sprint. Here's what happened:
+
+[Paste: what we built, what we tested, key findings, team reactions]
+
+Help me write a sprint retrospective that covers:
+1. What we learned (the actual insights, not just "users liked it")
+2. What surprised us
+3. What we'd do differently next sprint
+4. The clearest next step coming out of this
+5. A one-paragraph "elevator pitch" summary I can send to leadership<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+  </div>
+
+  <!-- ==================== CRITIQUE SESSIONS ==================== -->
+  <div class="category" data-category="critique">
+    <div class="category-header">
+      <div class="category-icon" style="background: #F3E8F5; color: #8A4BA5;">&#x1F50D;</div>
+      <h2>Critique Sessions</h2>
+    </div>
+    <p class="category-desc">Give and receive better feedback. Structure critiques so they surface what actually matters, not just what's easiest to comment on.</p>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Set up a critique with clear framing</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">I'm presenting [design/concept] at a critique session. The audience is [who]. The work is at [stage: early exploration / mid-fidelity / near-final].
+
+Write me a critique setup brief that includes:
+- A 2-sentence framing of what this design is trying to do
+- 3 specific questions I want feedback on (calibrated to the stage of the work)
+- What kind of feedback is helpful right now and what isn't
+- A suggested format for the session (silent review + discussion, round-robin, etc.)
+- A time structure for a [30/45/60]-minute session<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="participant">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Generate structured feedback on a design</div>
+        <div class="prompt-tags"><span class="tag tag-participant">Participant</span></div>
+      </div>
+      <div class="prompt-text">I need to give critique feedback on this design: [describe or paste screenshot description]
+
+The designer asked for feedback on: [their specific questions]
+
+Help me structure my feedback using this framework:
+1. What's working well and why (be specific, not just "looks good")
+2. What's confusing or creating friction, and for whom
+3. Questions I'd want to answer before going further
+4. One alternative approach worth exploring, with a clear rationale
+
+Keep the tone constructive. I want to push the work forward, not just react to it.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Synthesize critique notes into action items</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">Here are the raw notes from our design critique:
+
+[Paste all feedback]
+
+Synthesize this into:
+1. Feedback themes (group similar comments together)
+2. Conflicts (where reviewers disagree, and what's driving the disagreement)
+3. A prioritized action list: what to change now, what to explore, what to park
+4. Any feedback that's actually a requirements question (and who to ask)
+5. One thing multiple people praised that I should protect as I iterate<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="participant">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Challenge your own design before critique</div>
+        <div class="prompt-tags"><span class="tag tag-participant">Participant</span></div>
+      </div>
+      <div class="prompt-text">I'm about to put this design into critique: [describe your design and its intent]
+
+Play the role of 4 different critics, each with a distinct lens:
+1. The user advocate (is this actually solving a real problem?)
+2. The systems thinker (how does this affect the broader product?)
+3. The accessibility reviewer (who might this exclude?)
+4. The skeptic (what's the weakest assumption here?)
+
+For each perspective, give me the single toughest question they'd ask. Then tell me which one I should have the best answer for before I walk into the room.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Facilitate a "silent critique" exercise</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">I want to run a silent critique where reviewers write feedback independently before discussing. We have [number] reviewers and [number] designs to review.
+
+Design the exercise for me:
+1. A brief explanation I can read to the group
+2. The exact prompts/questions each reviewer should answer in writing (keep to 3-4)
+3. How long to give for silent review vs. discussion
+4. How to facilitate the discussion so quieter voices get heard
+5. A template I can paste into a shared doc for reviewers to fill in<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="both">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Turn vague feedback into specific direction</div>
+        <div class="prompt-tags"><span class="tag tag-both">Both</span></div>
+      </div>
+      <div class="prompt-text">I received this feedback on my design: "[paste the vague or confusing feedback]"
+
+Help me decode it:
+1. What they're probably actually saying (translate from vague to specific)
+2. What design element or decision is most likely triggering this reaction
+3. Two concrete things I could try in response
+4. A clarifying question I could ask them to confirm I'm reading it right<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+  </div>
+
+  <!-- ==================== RESEARCH SYNTHESIS ==================== -->
+  <div class="category" data-category="research">
+    <div class="category-header">
+      <div class="category-icon" style="background: #E2F0EC; color: #2C6B5A;">&#x1F9E9;</div>
+      <h2>Research Synthesis</h2>
+    </div>
+    <p class="category-desc">Turn messy research data into patterns, insights, and stories that move rooms. The hardest part of research isn't collecting, it's making sense.</p>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Run an affinity mapping exercise</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">I have [number] research observations from [interviews/usability tests/surveys]:
+
+[Paste your observations, one per line]
+
+Help me run an affinity mapping exercise:
+1. Group these into clusters based on underlying themes (not surface similarity)
+2. Name each cluster with an insight statement, not a topic label (e.g., "Users create workarounds because the main flow assumes expertise" not "Workarounds")
+3. Identify which clusters have the most observations (signal strength)
+4. Flag any outliers that don't fit a cluster but feel important
+5. Suggest which 3 clusters the team should focus on first and why<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="both">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Write insight statements from raw findings</div>
+        <div class="prompt-tags"><span class="tag tag-both">Both</span></div>
+      </div>
+      <div class="prompt-text">Here are my raw research findings:
+
+[Paste findings]
+
+Turn these into insight statements using this structure:
+"[User type] [behavior or belief] because [underlying motivation or context], which means [implication for design]."
+
+For each insight:
+- Rate the evidence strength (strong / moderate / emerging)
+- Note what would make the evidence stronger
+- Suggest one design implication
+
+Give me 5-8 insight statements, prioritized by strength of evidence.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Build a journey map from research data</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">Based on this research about [user type] doing [task/process]:
+
+[Paste your research data: quotes, observations, survey responses]
+
+Build a journey map that includes:
+- 5-7 phases of their experience
+- What they're doing, thinking, and feeling at each phase
+- Pain points and bright spots
+- The emotional arc (where does frustration peak? where does confidence grow?)
+- Opportunities for design intervention at each phase
+
+Format it as a table I can paste into a collaborative doc or whiteboard.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="participant">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Find what you're missing in your research</div>
+        <div class="prompt-tags"><span class="tag tag-participant">Participant</span></div>
+      </div>
+      <div class="prompt-text">I've been synthesizing research on [topic]. Here's what I've found so far:
+
+[Paste your current themes/insights]
+
+My research included: [methods used, number of participants, who they were]
+
+Help me identify:
+1. Perspectives I might be missing (whose voice isn't represented?)
+2. Questions my current insights don't answer
+3. Potential biases in my sample or methods
+4. Where I'm making a leap from data to conclusion that needs more evidence
+5. One provocative "what if the opposite were true?" challenge to my strongest finding<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Write a research readout that moves people</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">I need to present research findings to [audience: leadership / product team / engineering / cross-functional]. They have [15/30/45] minutes and care most about [what they want to know].
+
+My key findings are:
+[Paste your findings]
+
+Write me a presentation outline that:
+- Opens with the single most compelling finding (not methodology)
+- Uses participant quotes strategically (max 3-4)
+- Builds to a clear "so what" moment
+- Ends with specific, actionable recommendations (not just "more research needed")
+- Includes talking points for each section
+
+The goal is for people to leave the room ready to act, not just informed.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="both">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Create a persona from research data</div>
+        <div class="prompt-tags"><span class="tag tag-both">Both</span></div>
+      </div>
+      <div class="prompt-text">Based on this research data:
+
+[Paste interview excerpts, survey data, behavioral observations]
+
+Create a research-backed persona that includes:
+- A name and realistic context (not a stereotype)
+- Their primary goal and what's blocking them
+- Behaviors I actually observed (not assumed)
+- A direct quote that captures their mindset
+- The key tension in their experience (what they want vs. what they have to do)
+- How they differ from the other user types we've identified: [list them]
+
+Make this persona feel like a real person, not a marketing archetype.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+  </div>
+
+  <!-- ==================== PRIORITIZATION ==================== -->
+  <div class="category" data-category="prioritization">
+    <div class="category-header">
+      <div class="category-icon" style="background: #FEE8E8; color: #C0392B;">&#x2696;</div>
+      <h2>Prioritization Exercises</h2>
+    </div>
+    <p class="category-desc">When everything feels urgent, these prompts help your team make real choices, not just rearrange the deck chairs.</p>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Facilitate an impact-effort prioritization</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">We need to prioritize these design opportunities:
+
+[List your opportunities/features/ideas]
+
+For each one, help me assess:
+- User impact (how much does this improve someone's experience? low / medium / high)
+- Business impact (does this move a metric leadership cares about? low / medium / high)
+- Effort (design + engineering + testing, roughly: small / medium / large)
+- Risk (what could go wrong and how bad would it be?)
+
+Then place them in a 2x2 matrix (high impact + low effort = do first) and explain your reasoning. Flag any where the "obvious" quadrant might be misleading.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="both">
+      <div class="prompt-card-header">
+        <div class="prompt-title">"Kill your darlings" exercise</div>
+        <div class="prompt-tags"><span class="tag tag-both">Both</span></div>
+      </div>
+      <div class="prompt-text">We have too many features/ideas on the table and need to cut scope. Here's what we're considering:
+
+[List everything on the table]
+
+Our constraints: [timeline, team size, dependencies]
+Our core user need: [the one thing we must solve]
+
+Force-rank these by asking:
+1. If we could only ship ONE thing, which would it be? Why?
+2. For everything else: what happens to the user if we don't build this? (If the answer is "not much," cut it)
+3. Which items are we keeping because we're attached, not because users need them?
+4. What's the minimum viable version that actually solves the core need?
+
+Be honest with me. I need someone to help me let go.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Run a "MoSCoW" prioritization workshop</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">I'm facilitating a MoSCoW prioritization session with [team/stakeholders]. We're prioritizing [what] for [timeline].
+
+Here are all items to prioritize:
+[List them]
+
+Help me:
+1. Write a 2-minute explanation of MoSCoW I can read to the group (Must have / Should have / Could have / Won't have this time)
+2. Pre-sort these items with a rationale for each, so I have a starting position to react to
+3. Identify the items that will cause the most debate and prepare a question for each that helps resolve it
+4. Set a rule for the maximum percentage of effort that can be "Must have" (typically 60%)
+5. Write a summary template I can fill in after the session<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="participant">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Build a case for your priority</div>
+        <div class="prompt-tags"><span class="tag tag-participant">Participant</span></div>
+      </div>
+      <div class="prompt-text">I need to argue that [feature/initiative] should be prioritized higher. My audience is [who] and they care about [their priorities].
+
+Help me build a 2-minute pitch that:
+- Opens with the user problem (make them feel it)
+- Connects to a metric or outcome they already care about
+- Addresses the most likely objection ("but what about [competing priority]?")
+- Proposes a scope that's small enough to say yes to
+- Ends with a specific ask, not a vague "we should think about this"
+
+Keep it honest. If the case is weak, tell me where to strengthen it.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Resolve a prioritization deadlock</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">Our team is deadlocked on prioritization. The debate is between:
+
+Option A: [describe]
+Option B: [describe]
+
+The people arguing for A care about: [their reasoning]
+The people arguing for B care about: [their reasoning]
+
+Help me facilitate a resolution:
+1. Name the underlying values conflict (what does each side actually value?)
+2. Is there a "both/and" option that addresses both concerns?
+3. If we must choose: what's a fair decision framework we can agree on before applying it?
+4. A time-boxed experiment we could run instead of deciding permanently
+5. The single question that, if answered, would make the choice obvious<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="both">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Evaluate trade-offs honestly</div>
+        <div class="prompt-tags"><span class="tag tag-both">Both</span></div>
+      </div>
+      <div class="prompt-text">We're considering this trade-off:
+
+[Describe the decision: e.g., "Ship a simpler version now vs. build the full feature over 3 months"]
+
+Help me think through this clearly:
+1. What do we gain with each option? (Be specific, not just "speed" or "quality")
+2. What do we lose with each option? (Be honest about the real costs)
+3. Who is affected most by each choice and how would they feel about it?
+4. What's reversible and what isn't?
+5. In 6 months, which decision will we be glad we made?
+
+Don't tell me what to choose. Help me see the full picture.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+  </div>
+
+  <!-- ==================== ROADMAP PLANNING ==================== -->
+  <div class="category" data-category="roadmap">
+    <div class="category-header">
+      <div class="category-icon" style="background: #E8EEF8; color: #3B5998;">&#x1F5FA;</div>
+      <h2>Roadmap Planning</h2>
+    </div>
+    <p class="category-desc">Connect design decisions to strategy. Make roadmaps that tell a story, not just list features in order.</p>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Build a Now / Next / Later roadmap</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">I need to organize our design work into a Now / Next / Later roadmap.
+
+Here's everything on our plate:
+[List all initiatives, features, debt, and research]
+
+Our team: [size and composition]
+Our strategy: [what are we trying to achieve this quarter/half?]
+Key constraints: [dependencies, deadlines, unknowns]
+
+Help me:
+1. Sort items into Now (this sprint/month), Next (next 1-3 months), Later (3-6 months)
+2. For each bucket, explain the rationale (why now? why wait?)
+3. Identify dependencies between items
+4. Flag anything that's on the list but probably shouldn't be
+5. Write a one-paragraph narrative that turns this list into a story ("First we'll... which enables... so that eventually...")<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="both">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Stress-test your roadmap</div>
+        <div class="prompt-tags"><span class="tag tag-both">Both</span></div>
+      </div>
+      <div class="prompt-text">Here's our current design roadmap:
+
+[Paste your roadmap]
+
+Stress-test it by asking:
+1. If our top priority takes 2x longer than expected, what breaks?
+2. What happens if we lose a team member for 6 weeks?
+3. Which items are we doing because of inertia vs. genuine strategic value?
+4. Is there a dependency we haven't named that could block everything?
+5. What would a new design director cut from this on their first day?
+6. Are we solving last quarter's problem or this quarter's?
+
+Give me the honest version, not the comfortable one.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Translate design roadmap for leadership</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">I need to present our design roadmap to [VP/Director/C-level]. They care about [business outcomes, timelines, risk, team health — pick what matters most].
+
+Here's the roadmap:
+[Paste it]
+
+Translate it into a leadership-ready format:
+1. A 3-sentence executive summary (outcome-focused, not activity-focused)
+2. Each initiative reframed as "this enables [business outcome]" not "we're designing [feature]"
+3. The top 2 risks and what we're doing about them
+4. What we're intentionally NOT doing and why (this builds trust)
+5. One decision or resource we need from them to stay on track<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="participant">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Propose adding something to the roadmap</div>
+        <div class="prompt-tags"><span class="tag tag-participant">Participant</span></div>
+      </div>
+      <div class="prompt-text">I want to propose adding [initiative/project] to our design roadmap. Here's my case:
+
+- The problem: [what's broken or missing]
+- Who it affects: [users, internal teams, business metrics]
+- Evidence: [research, data, complaints, competitive pressure]
+- Rough effort: [my best guess]
+
+Help me write a one-page proposal that:
+1. Frames this in terms of what the team already cares about (don't introduce new goals)
+2. Shows what it would replace or what else would need to shift
+3. Proposes the smallest useful version (don't ask for the moon)
+4. Anticipates the "why now?" question with a clear answer
+5. Includes a "what if we don't" scenario that makes the cost of inaction concrete<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="facilitator">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Run a quarterly planning workshop</div>
+        <div class="prompt-tags"><span class="tag tag-facilitator">Facilitator</span></div>
+      </div>
+      <div class="prompt-text">I'm facilitating a quarterly design planning workshop. The team is [size and roles]. We have [time].
+
+Input: [what's carrying over, new requests, research insights, leadership priorities]
+
+Design a workshop agenda that:
+1. Opens with a 10-minute reflection on last quarter (what we shipped, what we learned, what we didn't get to)
+2. Includes an exercise to surface new opportunities the team sees
+3. Has a structured way to evaluate and compare opportunities
+4. Ends with clear commitments: what we'll do, what we won't, and who owns what
+5. Builds in time for the "uncomfortable conversation" (the thing nobody wants to say about capacity, scope, or strategy)
+
+Include facilitation notes: how to keep it moving, what to do if it stalls, and how to handle the loudest voice in the room.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+
+    <div class="prompt-card" data-role="both">
+      <div class="prompt-card-header">
+        <div class="prompt-title">Write a roadmap narrative</div>
+        <div class="prompt-tags"><span class="tag tag-both">Both</span></div>
+      </div>
+      <div class="prompt-text">Here's our roadmap as a list of items:
+
+[Paste the list]
+
+Turn it into a narrative. Not a bulleted list with timeframes, but a story:
+- Why are we doing these things in this order?
+- What user experience are we building toward?
+- What's the "before" and "after" for our users 6 months from now?
+- How does each phase build on the last?
+
+Write it as 3-4 paragraphs I could put at the top of a planning doc or read at the start of a team meeting. It should make someone who just joined the team understand not just what we're doing, but why it matters.<button class="copy-btn" onclick="copyPrompt(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2v1"/></svg>Copy</button></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- USAGE TIPS -->
+<div class="tips">
+  <div class="tips-box">
+    <h3>How to get the most from these prompts</h3>
+    <ul>
+      <li>These work with any LLM: ChatGPT, Claude, Gemini, Copilot, or whatever you have access to. No special tools required.</li>
+      <li>Replace everything in [brackets] with your specifics. The more context you give, the better the output.</li>
+      <li>Treat the output as a first draft, not a final answer. The value is in the structure it gives your thinking, not the exact words.</li>
+      <li>Use the Facilitator prompts when you're leading or planning. Use the Participant prompts when you're contributing or preparing.</li>
+      <li>Chain prompts together: run a stakeholder interview synthesis, then feed the output into a design principles prompt.</li>
+      <li>The best prompt is one you modify. If something doesn't fit your context, edit it. These are starting points, not scripts.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>Made by <a href="https://marieclairedean.substack.com" target="_blank">MC Percolates</a></p>
+  <p style="margin-top: 8px;">Design is the missing discipline in AI. These prompts are a small proof of that.</p>
+</div>
+
+<script>
+  // ---- COPY TO CLIPBOARD ----
+  function copyPrompt(btn) {
+    const promptEl = btn.closest('.prompt-text');
+    const clone = promptEl.cloneNode(true);
+    const button = clone.querySelector('.copy-btn');
+    if (button) button.remove();
+    const text = clone.textContent.trim();
+
+    navigator.clipboard.writeText(text).then(() => {
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // ---- CATEGORY FILTERING ----
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const categories = document.querySelectorAll('.category');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilters();
+    });
+  });
+
+  // ---- ROLE FILTERING ----
+  const roleBtns = document.querySelectorAll('.role-btn');
+
+  roleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      roleBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilters();
+    });
+  });
+
+  function applyFilters() {
+    const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+    const activeRole = document.querySelector('.role-btn.active').dataset.role;
+    let visibleCount = 0;
+
+    categories.forEach(cat => {
+      const catMatch = activeFilter === 'all' || cat.dataset.category === activeFilter;
+      if (!catMatch) {
+        cat.classList.add('hidden');
+        return;
+      }
+
+      const cards = cat.querySelectorAll('.prompt-card');
+      let categoryHasVisible = false;
+
+      cards.forEach(card => {
+        const cardRole = card.dataset.role;
+        const roleMatch = activeRole === 'all' || cardRole === activeRole || cardRole === 'both';
+        if (roleMatch) {
+          card.classList.remove('hidden');
+          categoryHasVisible = true;
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if (categoryHasVisible) {
+        cat.classList.remove('hidden');
+      } else {
+        cat.classList.add('hidden');
+      }
+    });
+
+    document.getElementById('promptCount').textContent =
+      `Showing ${visibleCount} prompt${visibleCount !== 1 ? 's' : ''}`;
+  }
+</script>
+
+</body>
+</html>
